@@ -11,10 +11,6 @@ public class Product {
 
     private String name;
 
-    private int numberOfProductsWithCapitalLetter;
-
-    private int numberOfProductsWithSmallLetter;
-
     public int getId() {
         return id;
     }
@@ -29,21 +25,5 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getNumberOfProductsWithCapitalLetter() {
-        return numberOfProductsWithCapitalLetter;
-    }
-
-    public void setNumberOfProductsWithCapitalLetter(int numberOfProductsWithCapitalLetter) {
-        this.numberOfProductsWithCapitalLetter = numberOfProductsWithCapitalLetter;
-    }
-
-    public int getNumberOfProductsWithSmallLetter() {
-        return numberOfProductsWithSmallLetter;
-    }
-
-    public void setNumberOfProductsWithSmallLetter(int numberOfProductsWithSmallLetter) {
-        this.numberOfProductsWithSmallLetter = numberOfProductsWithSmallLetter;
     }
 }
