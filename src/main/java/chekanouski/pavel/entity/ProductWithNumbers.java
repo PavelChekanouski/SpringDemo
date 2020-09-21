@@ -1,16 +1,13 @@
 package chekanouski.pavel.entity;
 
-import java.util.HashSet;
-
 public class ProductWithNumbers extends Product{
     private int id;
     private String name;
     private int numberOfWordsWithCapitalLetter;
     private int numberOfWordsWithSmallLetter;
 
-    public ProductWithNumbers(Product product, int numberOfWordsWithCapitalLetter, int numberOfWordsWithSmallLetter) {
-        this.id = product.getId();
-        this.name = product.getName();
+    public ProductWithNumbers( String name, int numberOfWordsWithCapitalLetter, int numberOfWordsWithSmallLetter) {
+        this.name = name;
         this.numberOfWordsWithCapitalLetter = numberOfWordsWithCapitalLetter;
         this.numberOfWordsWithSmallLetter = numberOfWordsWithSmallLetter;
     }
