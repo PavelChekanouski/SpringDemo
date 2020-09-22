@@ -42,27 +42,14 @@ public class ProductController {
 
     }
 
+    @Autowired
+    private ProductService service;
+
     @GetMapping("/getUniqueWithNumbers")
     public Response getUniqueProductsWithNumbers() {
-        HashMap<String, ProductWithNumbers> map = new HashMap<>();
-
         ArrayList<Product> products = (ArrayList<Product>) productRepository.findAll();
 
-        for(Product product: products){
-            String name = product.getName();
-            if (map.containsKey(name.toLowerCase())) {
-                if(name.substring(0, 1).toCharArray()[0] <= 90 && name.substring(0, 1).toCharArray()[0] >= 65) {
-                    map.replace(name.toLowerCase(), new ProductWithNumbers(name.toLowerCase(), map.get(name.toLowerCase()).getNumberOfWordsWithCapitalLetter() + 1, map.get(name.toLowerCase ()).getNumberOfWordsWithSmallLetter()));
-                }
-                else map.replace(name.toLowerCase(), new ProductWithNumbers(name.toLowerCase(), map.get(name.toLowerCase ()).getNumberOfWordsWithCapitalLetter(), map.get(name.toLowerCase ()).getNumberOfWordsWithSmallLetter() + 1));
-            }
-            else if(name.substring(0, 1).toCharArray()[0] <= 90 && name.substring(0, 1).toCharArray()[0] >= 65){
-                map.put(name.toLowerCase(), new ProductWithNumbers(name.toLowerCase(), 1, 0));
-            }
-            else map.put(name.toLowerCase(), new ProductWithNumbers(name.toLowerCase(), 0, 1));
-        }
-
-        HashSet<ProductWithNumbers> productsWithNumbers = new HashSet<>(map.values());
+        HashSet<ProductWithNumbers> productsWithNumbers = service.getSetOfWordsWithNumbers(products);
 
         if (!products.isEmpty()) {
             return new ProductResponse(SUCCESS_STATUS, CODE_SUCCESS, productsWithNumbers);
