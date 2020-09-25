@@ -1,60 +1,46 @@
 package chekanouski.pavel.controller;
 
 import chekanouski.pavel.entity.Product;
-import chekanouski.pavel.entity.ProductWithNumbers;
-import chekanouski.pavel.repository.ProductRepository;
-import chekanouski.pavel.service.*;
+import chekanouski.pavel.dto.ProductWithNumbers;
+
+import chekanouski.pavel.service.Product.ProductServiceImpl;
+import chekanouski.pavel.service.ProductWithNumbers.ProductWithNumbersByJavaServiceImpl;
+import chekanouski.pavel.service.ProductWithNumbers.ProductWithNumbersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/")
 public class ProductController {
 
-    private final String SUCCESS_STATUS = "success";
-    private final int CODE_SUCCESS = 100;
-    private static final String ERROR_STATUS = "error";
-    private static final int AUTH_FAILURE = 102;
+    @GetMapping
+    public ResponseEntity<String> showStatus() {
+        return new ResponseEntity<>("Connected to the server", HttpStatus.OK);
+    }
 
     @Autowired
-    private ProductRepository productRepository;
-
-    @GetMapping
-    public Response showStatus() {
-        return new Response(SUCCESS_STATUS, CODE_SUCCESS);
-    }
+    private ProductServiceImpl productService;
 
     @GetMapping("/getUnique")
-    public Response getUniqueProducts() {
-
-        HashSet<Product> products = new HashSet<>((List<Product>) productRepository.findAll());
-
-        if (!products.isEmpty()) {
-            return new ProductResponse(SUCCESS_STATUS, CODE_SUCCESS, products);
-        } else {
-            return new Response(ERROR_STATUS, AUTH_FAILURE);
-        }
-
+    public ResponseEntity<Set<Product>> getUniqueProducts() {
+        return new ResponseEntity<>(productService.getSetOfProducts(), HttpStatus.OK);
     }
 
     @Autowired
-    private ProductService service;
+    private ProductWithNumbersServiceImpl productWithNumbersService;
+
+    @Autowired
+    private ProductWithNumbersByJavaServiceImpl productWithNumbersByJavaService;
 
     @GetMapping("/getUniqueWithNumbers")
-    public Response getUniqueProductsWithNumbers() {
-        ArrayList<Product> products = (ArrayList<Product>) productRepository.findAll();
+    public ResponseEntity<Set<ProductWithNumbers>> getUniqueProductsWithNumbers() {
 
-        HashSet<ProductWithNumbers> productsWithNumbers = service.getSetOfWordsWithNumbers(products);
-
-        if (!products.isEmpty()) {
-            return new ProductResponse(SUCCESS_STATUS, CODE_SUCCESS, productsWithNumbers);
-        } else {
-            return new Response(ERROR_STATUS, AUTH_FAILURE);
-        }
+        return new ResponseEntity<>(productWithNumbersByJavaService.getSetOfProductsWithNumbers(), HttpStatus.OK);
+        //return new ResponseEntity<>(productWithNumbersService.getSetOfProductsWithNumbers(), HttpStatus.OK);
 
     }
 

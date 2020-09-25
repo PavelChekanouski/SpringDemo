@@ -1,14 +1,18 @@
 package chekanouski.pavel.entity;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
+@Table(name = "product")
 public class Product {
     @Id
     private int id;
-
+    @Column
     private String name;
 
     public int getId() {
@@ -25,5 +29,18 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return name.equals(product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }
