@@ -22,22 +22,18 @@ public class ProductWithNumbersByJavaServiceImpl implements ProductWithNumbersSe
 
         Map<String, Long> productMap = products.stream().collect(Collectors.groupingBy(Product::getName, Collectors.counting()));
 
-        ArrayList<ProductWithNumbers> list = new ArrayList<>();
+        HashSet<ProductWithNumbers> set = new HashSet<>();
 
-        for(String key: productMap.keySet()) {
+        for(String key: productMap.keySet()){
             if(Character.isLowerCase(key.charAt(0))) {
-                list.add(new ProductWithNumbers(key, 0, productMap.get(key)));
+                set.add(new ProductWithNumbers(key, productMap.getOrDefault(key.substring(0, 1).toUpperCase() + key.substring(1), 0L), productMap.getOrDefault(key, 0L)));
             } else {
-                int index = list.indexOf(new ProductWithNumbers(key.toLowerCase()));
-                if(index != -1){
-                    list.add(new ProductWithNumbers(key.toLowerCase(), productMap.get(key), 0));
-                } else {
-                    list.add(index, new ProductWithNumbers(key.toLowerCase(), productMap.get(key), productMap.get(key.toLowerCase())));
-                }
+                set.add(new ProductWithNumbers(key.toLowerCase(), productMap.getOrDefault(key, 0L), productMap.getOrDefault(key.toLowerCase(), 0L)));
             }
         }
 
-        return new HashSet(list);
+
+        return set;
     }
 }
 
