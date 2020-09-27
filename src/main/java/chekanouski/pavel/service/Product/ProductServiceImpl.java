@@ -2,7 +2,6 @@ package chekanouski.pavel.service.Product;
 
 import chekanouski.pavel.entity.Product;
 import chekanouski.pavel.repository.ProductRepository;
-import chekanouski.pavel.service.Product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +16,12 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public Set<Product> getSetOfProducts() {
-        boolean doByJava = false;
-        if(doByJava){
-            return new HashSet<Product>((List<Product>) productRepository.findAll());
-        }
-        else {
-            return productRepository.getDistinct();
+    public Set<Product> getSetOfProducts(byte value) {
+
+        switch (value) {
+            case (1) : return new HashSet<>((List<Product>) productRepository.findAll());
+
+            default : return productRepository.getDistinct();
         }
     }
 }

@@ -13,7 +13,6 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
     Set<Product> getDistinct();
 
     @Query("select product.name, count(product.name) from Product product group by product.name")
-    //HashMap<String, Integer> getDistinctWithNumber();
-    ArrayList getDistinctWithNumber();
+    List<Object[]> getDistinctWithNumber();
 
 }

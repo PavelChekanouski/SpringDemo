@@ -5,6 +5,7 @@ import chekanouski.pavel.dto.ProductWithNumbers;
 
 import chekanouski.pavel.service.Product.ProductServiceImpl;
 import chekanouski.pavel.service.ProductWithNumbers.ProductWithNumbersByJavaServiceImpl;
+import chekanouski.pavel.service.ProductWithNumbers.ProductWithNumbersBySQLServiceImpl;
 import chekanouski.pavel.service.ProductWithNumbers.ProductWithNumbersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,9 @@ public class ProductController {
     @Autowired
     private ProductServiceImpl productService;
 
-    @GetMapping("/getUnique")
-    public ResponseEntity<Set<Product>> getUniqueProducts() {
-        return new ResponseEntity<>(productService.getSetOfProducts(), HttpStatus.OK);
+    @GetMapping("/getUnique/{value}")
+    public ResponseEntity<Set<Product>> getUniqueProducts(@PathVariable(value = "value") byte value) {
+        return new ResponseEntity<>(productService.getSetOfProducts(value), HttpStatus.OK);
     }
 
     @Autowired
@@ -36,11 +37,19 @@ public class ProductController {
     @Autowired
     private ProductWithNumbersByJavaServiceImpl productWithNumbersByJavaService;
 
-    @GetMapping("/getUniqueWithNumbers")
-    public ResponseEntity<Set<ProductWithNumbers>> getUniqueProductsWithNumbers() {
+    @Autowired
+    private ProductWithNumbersBySQLServiceImpl productWithNumbersBySQLService;
 
-        return new ResponseEntity<>(productWithNumbersByJavaService.getSetOfProductsWithNumbers(), HttpStatus.OK);
-        //return new ResponseEntity<>(productWithNumbersService.getSetOfProductsWithNumbers(), HttpStatus.OK);
+    @GetMapping("/getUniqueWithNumbers/{value}")
+    public ResponseEntity<Set<ProductWithNumbers>> getUniqueProductsWithNumbers(@PathVariable(value = "value") byte value) {
+        switch (value){
+
+            case (1) : return new ResponseEntity<>(productWithNumbersByJavaService.getSetOfProductsWithNumbers(), HttpStatus.OK);
+
+            case (2) : return new ResponseEntity<>(productWithNumbersBySQLService.getSetOfProductsWithNumbers(), HttpStatus.OK);
+
+            default : return new ResponseEntity<>(productWithNumbersService.getSetOfProductsWithNumbers(), HttpStatus.OK);
+        }
 
     }
 

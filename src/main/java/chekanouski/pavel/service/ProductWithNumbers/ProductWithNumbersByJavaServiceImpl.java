@@ -31,8 +31,6 @@ public class ProductWithNumbersByJavaServiceImpl implements ProductWithNumbersSe
                 set.add(new ProductWithNumbers(key.toLowerCase(), productMap.getOrDefault(key, 0L), productMap.getOrDefault(key.toLowerCase(), 0L)));
             }
         }
-
-
         return set;
     }
 }
