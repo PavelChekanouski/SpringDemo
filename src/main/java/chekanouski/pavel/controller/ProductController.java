@@ -7,7 +7,6 @@ import chekanouski.pavel.service.Product.ProductServiceImpl;
 import chekanouski.pavel.service.ProductWithNumbers.ProductWithNumbersByJavaServiceImpl;
 import chekanouski.pavel.service.ProductWithNumbers.ProductWithNumbersBySQLServiceImpl;
 import chekanouski.pavel.service.ProductWithNumbers.ProductWithNumbersServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,27 +17,28 @@ import java.util.Set;
 @RequestMapping("/")
 public class ProductController {
 
-    @GetMapping
+    private final ProductServiceImpl productService;
+    private final ProductWithNumbersServiceImpl productWithNumbersService;
+    private final ProductWithNumbersByJavaServiceImpl productWithNumbersByJavaService;
+    private final ProductWithNumbersBySQLServiceImpl productWithNumbersBySQLService;
+
+    public ProductController(ProductServiceImpl productService, ProductWithNumbersServiceImpl productWithNumbersService, ProductWithNumbersByJavaServiceImpl productWithNumbersByJavaService, ProductWithNumbersBySQLServiceImpl productWithNumbersBySQLService) {
+        this.productService = productService;
+        this.productWithNumbersService = productWithNumbersService;
+        this.productWithNumbersByJavaService = productWithNumbersByJavaService;
+        this.productWithNumbersBySQLService = productWithNumbersBySQLService;
+    }
+
+    @GetMapping("/start")
     public ResponseEntity<String> showStatus() {
         return new ResponseEntity<>("Connected to the server", HttpStatus.OK);
     }
 
-    @Autowired
-    private ProductServiceImpl productService;
 
     @GetMapping("/getUnique/{value}")
     public ResponseEntity<Set<Product>> getUniqueProducts(@PathVariable(value = "value") byte value) {
         return new ResponseEntity<>(productService.getSetOfProducts(value), HttpStatus.OK);
     }
-
-    @Autowired
-    private ProductWithNumbersServiceImpl productWithNumbersService;
-
-    @Autowired
-    private ProductWithNumbersByJavaServiceImpl productWithNumbersByJavaService;
-
-    @Autowired
-    private ProductWithNumbersBySQLServiceImpl productWithNumbersBySQLService;
 
     @GetMapping("/getUniqueWithNumbers/{value}")
     public ResponseEntity<Set<ProductWithNumbers>> getUniqueProductsWithNumbers(@PathVariable(value = "value") byte value) {
