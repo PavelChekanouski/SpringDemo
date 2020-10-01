@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode
 public class Specification {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false, updatable = false)

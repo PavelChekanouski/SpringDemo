@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     public Set<Product> getSetOfProducts(byte value) {
 
         switch (value) {
-            case (1) : return new HashSet<>((List<Product>) productRepository.findAll());
+            case (1) : return new HashSet<>(productRepository.findAll());
 
             default : return productRepository.getDistinct();
         }

@@ -17,6 +17,7 @@ public class Brand {
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false, updatable = false)
     private long id;
+
     @Column(name = "name", nullable = false, updatable = false)
     private String name;
 }
