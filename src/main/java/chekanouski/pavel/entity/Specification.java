@@ -15,10 +15,8 @@ public class Specification {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false, updatable = false)
-    private int id;
+    private long id;
 
-    @Column(name = "name", nullable = false, updatable = false)
-    private String name;
-
-
+    @Column(name = "specification", nullable = false, updatable = false)
+    private String specification;
 }
