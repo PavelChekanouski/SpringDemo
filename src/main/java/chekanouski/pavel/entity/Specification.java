@@ -7,16 +7,18 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "brands")
+@Table(name = "specifications")
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Brand {
-
+public class Specification {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false, updatable = false)
     private int id;
+
     @Column(name = "name", nullable = false, updatable = false)
     private String name;
+
+
 }

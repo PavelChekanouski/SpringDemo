@@ -3,6 +3,7 @@ package chekanouski.pavel.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,9 +18,14 @@ public class Product {
     @Column(name = "name", nullable = false, updatable = false)
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name= "brand_id", referencedColumnName = "id")
     public Brand brand;
+    @ManyToMany
+    @JoinTable(name = "products_join_specifications",
+            joinColumns = @JoinColumn(name = "products_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "specification_id", referencedColumnName = "id"))
+    public List<Specification> specificationList;
 
 
     @Override
