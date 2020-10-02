@@ -24,18 +24,15 @@ public class Product {
 
     @OneToOne
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
-    public Brand brand;
+    private Brand brand;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @JoinTable(name = "products_join_specifications",
             joinColumns = @JoinColumn(name = "products_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "specification_id", referencedColumnName = "id"))
-    public List<Specification> specificationList = new ArrayList<>();
+    private List<Specification> specificationList = new ArrayList<>();
 
-    //!!!!!!!!!!!!!!!!!!Не работает, так как в 2 случах используется FetchType.EAGER, но по отдельности работают без проблем
-    //org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: chekanouski.pavel.entity.Product.images, could not initialize proxy - no Session
-    //Скорее всего проблема в том, что нет сессии. Попробую разобраться чуть позже
     @OneToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "product_id")
