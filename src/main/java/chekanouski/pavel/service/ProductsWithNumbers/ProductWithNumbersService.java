@@ -1,4 +1,4 @@
-package chekanouski.pavel.service.ProductWithNumbers;
+package chekanouski.pavel.service.ProductsWithNumbers;
 
 import chekanouski.pavel.dto.ProductWithNumbers;
 import java.util.Set;

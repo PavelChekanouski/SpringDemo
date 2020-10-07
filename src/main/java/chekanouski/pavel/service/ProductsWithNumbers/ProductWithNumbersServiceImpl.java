@@ -1,9 +1,8 @@
-package chekanouski.pavel.service.ProductWithNumbers;
+package chekanouski.pavel.service.ProductsWithNumbers;
 
 import chekanouski.pavel.entity.Product;
 import chekanouski.pavel.dto.ProductWithNumbers;
 import chekanouski.pavel.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,8 +13,11 @@ import java.util.Set;
 @Service
 public class ProductWithNumbersServiceImpl implements ProductWithNumbersService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ProductWithNumbersServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @Override
     public Set<ProductWithNumbers> getSetOfProductsWithNumbers() {

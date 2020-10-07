@@ -1,8 +1,8 @@
-package chekanouski.pavel.service.Product;
+package chekanouski.pavel.service.Products;
 
 import chekanouski.pavel.entity.Product;
 import java.util.Set;
 
 public interface ProductService {
-    Set<Product> getSetOfProducts(byte value);
+    Set<Product> getSetOfProducts();
 }
